@@ -257,7 +257,7 @@ h1 {
   outline: none;
 }
 
-/* .is-dragging is toggled from app.js while a file is over the zone */
+/* .is-dragging is toggled by Uploader.jsx while a file is over the zone */
 .dropzone.is-dragging {
   border-color: var(--accent-2);
   background: rgb(34 211 238 / 0.08);
@@ -379,7 +379,7 @@ h1 {
 .ring-track { stroke: var(--surface-2); }
 
 .ring-fill {
-  /* stroke colour is set inline by app.js from the score */
+  /* stroke colour is set inline by ScoreRing.jsx from the score */
   stroke: var(--accent);
   stroke-dasharray: var(--ring);
   stroke-dashoffset: var(--ring);
