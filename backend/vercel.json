@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "rewrites": [
+    { "source": "/api/health", "destination": "/api/index.js" },
+    { "source": "/api/scans", "destination": "/api/index.js" },
+    { "source": "/api/scan", "destination": "/api/index.js" }
+  ]
+}
