@@ -2,7 +2,7 @@
    weight: core = 3, tool = 2, bonus = 1.
    The score is covered weight / total weight, so one core
    skill is worth three bonuses. Add a role by adding a file
-   like this one and passing it to scoreResume(). */
+   like this one and passing it to analyze(). */
 
 export const SKILLS = [
   { name: "JavaScript", weight: "core", aliases: ["javascript", "js", "es6", "ecmascript"] },

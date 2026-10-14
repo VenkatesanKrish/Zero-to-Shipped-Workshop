@@ -5,6 +5,9 @@ import HowItWorks from "./components/HowItWorks.jsx";
 import Footer from "./components/Footer.jsx";
 import { useResumeScanner } from "./hooks/useResumeScanner.js";
 
+/* v0.2 — the flow is now: pick a resume, paste a job description, analyse.
+   The scoring happens on the server (see backend/src/lib/analyze.js). */
+
 /** The page. State lives in the hook; the components below are presentational.
  *
  *  Two patterns worth noticing as you read:
@@ -13,8 +16,19 @@ import { useResumeScanner } from "./hooks/useResumeScanner.js";
  *   - the scanner is created once and its callbacks are stable, so children
  *     do not re-render just because the parent did. */
 export default function App() {
-  const { status, statusKind, file, result, busy, resultsRef, scan, reset } =
-    useResumeScanner();
+  const {
+    status,
+    statusKind,
+    file,
+    jobDescription,
+    setJobDescription,
+    result,
+    busy,
+    resultsRef,
+    selectFile,
+    analyze,
+    reset,
+  } = useResumeScanner();
 
   return (
     <>
@@ -24,23 +38,27 @@ export default function App() {
       <main id="top">
         <section className="hero">
           <div className="hero-copy">
-            <p className="eyebrow">Resume parser · v0.1</p>
+            <p className="eyebrow">Resume parser · v0.2</p>
             <h1>
-              Know your resume's score <span className="grad">before a recruiter does.</span>
+              Know your match score <span className="grad">before a recruiter does.</span>
             </h1>
             <p className="lede">
-              Drop in a PDF. We pull the text out, match it against the skills your target
-              roles actually ask for, and show you the score, what you have, and what is missing.
+              Upload your resume, paste the job description, and see how well they line up —
+              the score, the skills the job asks for that you already have, and the ones you
+              are missing.
             </p>
             <ul className="hero-points">
-              <li>Runs entirely in your browser — nothing is uploaded to a server</li>
-              <li>Instant skill-match score with a per-category breakdown</li>
-              <li>Concrete missing skills, so you know exactly what to learn next</li>
+              <li>Compares your resume against the specific job you are targeting</li>
+              <li>Match score with the exact skills you are missing</li>
+              <li>Bonus skills you have that the posting never asked for</li>
             </ul>
           </div>
 
           <Uploader
-            onFile={scan}
+            onSelectFile={selectFile}
+            onAnalyze={analyze}
+            jobDescription={jobDescription}
+            onJobDescriptionChange={setJobDescription}
             status={status}
             statusKind={statusKind}
             file={file}

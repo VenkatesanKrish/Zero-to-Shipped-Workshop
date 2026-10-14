@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ringColour } from "../lib/scoring.js";
+import { ringColour } from "../../../src/lib/scoring.js";
 
 const RING = 339.292; // matches --ring in index.css
 

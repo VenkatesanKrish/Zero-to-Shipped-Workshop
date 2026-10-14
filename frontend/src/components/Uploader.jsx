@@ -1,10 +1,21 @@
 import { useRef, useState } from "react";
 
-/** The upload panel: dropzone, file picker, status line.
+/** The upload panel: dropzone, job description, analyse button.
  *
- *  All the drag-and-drop plumbing lives here and nowhere else. The parent
- *  only ever hears about it through `onFile(file)`. */
-export default function Uploader({ onFile, status, statusKind, file, onReset, busy }) {
+ *  Two inputs feed one action, so the button is disabled until both are
+ *  present. That is clearer than letting someone submit and bouncing them
+ *  with an error afterwards. */
+export default function Uploader({
+  onSelectFile,
+  onAnalyze,
+  jobDescription,
+  onJobDescriptionChange,
+  status,
+  statusKind,
+  file,
+  onReset,
+  busy,
+}) {
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef(null);
 
@@ -15,7 +26,7 @@ export default function Uploader({ onFile, status, statusKind, file, onReset, bu
     // to the PDF instead of letting us read it.
     event.preventDefault();
     setDragging(false);
-    onFile(event.dataTransfer.files?.[0]);
+    onSelectFile(event.dataTransfer.files?.[0]);
   };
 
   const handleKeyDown = (event) => {
@@ -25,10 +36,12 @@ export default function Uploader({ onFile, status, statusKind, file, onReset, bu
     }
   };
 
+  const ready = Boolean(file) && jobDescription.trim().length >= 30;
+
   return (
     <div className="panel" id="uploader">
       <div className="panel-head">
-        <h2>Upload your resume</h2>
+        <h2>Match your resume to a job</h2>
         <span className="badge">PDF · max 5 MB</span>
       </div>
 
@@ -37,7 +50,6 @@ export default function Uploader({ onFile, status, statusKind, file, onReset, bu
         role="button"
         tabIndex={0}
         aria-label="Choose a PDF resume to analyse"
-        aria-busy={busy}
         onClick={openPicker}
         onKeyDown={handleKeyDown}
         onDragEnter={(e) => {
@@ -75,9 +87,9 @@ export default function Uploader({ onFile, status, statusKind, file, onReset, bu
         <input
           ref={inputRef}
           type="file"
-          accept="application/pdf,.pdf,.txt"
+          accept="application/pdf,.pdf"
           hidden
-          onChange={(e) => onFile(e.target.files?.[0])}
+          onChange={(e) => onSelectFile(e.target.files?.[0])}
         />
       </div>
 
@@ -91,6 +103,29 @@ export default function Uploader({ onFile, status, statusKind, file, onReset, bu
           </button>
         </p>
       )}
+
+      <label className="jd-field">
+        <span className="jd-label">
+          Job description
+          <span className="jd-hint">paste the posting you are targeting</span>
+        </span>
+        <textarea
+          className="jd-input"
+          rows={6}
+          value={jobDescription}
+          onChange={(e) => onJobDescriptionChange(e.target.value)}
+          placeholder="Paste the full job description here — responsibilities, requirements, the lot."
+        />
+      </label>
+
+      <button
+        className="analyse-btn"
+        type="button"
+        onClick={onAnalyze}
+        disabled={!ready || busy}
+      >
+        {busy ? "Analysing…" : "Analyse match"}
+      </button>
 
       <p className={`status ${statusKind}`.trim()} role="status" aria-live="polite">
         {status}
@@ -108,7 +143,7 @@ export default function Uploader({ onFile, status, statusKind, file, onReset, bu
           <rect x="4" y="10" width="16" height="10" rx="2" />
           <path d="M8 10V7a4 4 0 0 1 8 0v3" />
         </svg>
-        Client-side only — your file never leaves this page.
+        Your resume is parsed on the server and never shared with third parties.
       </p>
     </div>
   );

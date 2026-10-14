@@ -7,8 +7,8 @@ export default function HowItWorks() {
           <span className="step">01</span>
           <h3>Extract</h3>
           <p>
-            pdf.js reads the text layer of every page in a worker thread and joins it
-            into one lowercase string. No text layer (a scanned image) means nothing to score.
+            The server reads the text layer of every page of your PDF. No text layer
+            (a scanned image) means nothing to compare.
           </p>
         </article>
         <article>
@@ -24,8 +24,8 @@ export default function HowItWorks() {
           <span className="step">03</span>
           <h3>Weigh</h3>
           <p>
-            Core skills carry more weight than tooling. The score is the weight you
-            cover divided by the total weight, as a percentage.
+            Core skills carry more weight than tooling. The score is the weight of the
+            job's requirements you cover divided by all of them, as a percentage.
           </p>
         </article>
       </div>

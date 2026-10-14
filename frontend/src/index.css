@@ -313,6 +313,76 @@ h1 {
 .status.is-error { color: var(--miss); }
 .status.is-ok { color: var(--ok); }
 
+/* ---------------- Job description field ---------------- */
+
+.jd-field {
+  display: block;
+  margin-top: 16px;
+}
+
+.jd-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.jd-hint {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--text-faint);
+}
+
+.jd-input {
+  width: 100%;
+  resize: vertical;
+  padding: 12px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.jd-input::placeholder { color: var(--text-faint); }
+
+.jd-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgb(124 92 255 / 0.18);
+}
+
+/* ---------------- Analyse button ---------------- */
+
+.analyse-btn {
+  width: 100%;
+  margin-top: 14px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(100deg, var(--accent), var(--accent-2));
+  color: #0b0c11;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.analyse-btn:hover:not(:disabled) { transform: translateY(-1px); }
+
+/* A disabled control must look disabled. Without this the button still looks
+   clickable, and the user thinks the app is broken when nothing happens. */
+.analyse-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .privacy {
   display: flex;
   align-items: center;
@@ -444,6 +514,7 @@ h1 {
 .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
 .dot-ok { background: var(--ok); box-shadow: 0 0 0 4px rgb(52 211 153 / 0.14); }
 .dot-miss { background: var(--miss); box-shadow: 0 0 0 4px rgb(251 113 133 / 0.14); }
+.dot-bonus { background: var(--accent-2); box-shadow: 0 0 0 4px rgb(34 211 238 / 0.14); }
 
 .count {
   margin-left: auto;
@@ -483,7 +554,13 @@ h1 {
   background: rgb(251 113 133 / 0.08);
 }
 
-/* Small weight tag inside a missing chip, e.g. "Docker · core" */
+.chip-bonus {
+  color: #bae6fd;
+  border-color: rgb(34 211 238 / 0.28);
+  background: rgb(34 211 238 / 0.08);
+}
+
+/* Small weight tag inside a chip, e.g. "Docker · core" */
 .chip-tag { color: var(--text-faint); font-size: 0.75em; }
 
 .empty-note {
