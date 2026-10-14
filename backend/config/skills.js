@@ -1,8 +1,11 @@
 /* The skills dictionary — this IS the "target role".
-   weight: core = 3, tool = 2, bonus = 1.
-   The score is covered weight / total weight, so one core
-   skill is worth three bonuses. Add a role by adding a file
-   like this one and passing it to analyze(). */
+ *
+ *  It lives in config/ because it configures what the analyser looks for:
+ *  change this file and you change what the app considers a skill. The
+ *  service layer treats it as input data, never as logic.
+ *
+ *  weight: core = 3, tool = 2, bonus = 1.
+ *  One core skill is worth three bonuses. */
 
 export const SKILLS = [
   { name: "JavaScript", weight: "core", aliases: ["javascript", "js", "es6", "ecmascript"] },

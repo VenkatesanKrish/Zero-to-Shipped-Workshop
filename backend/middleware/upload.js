@@ -7,7 +7,10 @@ const MAX_BYTES = 5 * 1024 * 1024;
  *  memoryStorage is the right call here: the PDF is parsed once and thrown
  *  away, so a temp file would only add cleanup work and a place for stale
  *  resumes to pile up. The trade-off is that a large file sits in RAM, which
- *  is why the size limit matters. */
+ *  is why the size limit matters.
+ *
+ *  This is middleware because it has to run before the controller: the
+ *  controller should receive a ready `req.file`, not parse a stream itself. */
 export const uploadPdf = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: MAX_BYTES },
@@ -16,7 +19,7 @@ export const uploadPdf = multer({
       file.mimetype === "application/pdf" ||
       file.originalname.toLowerCase().endsWith(".pdf");
     if (!isPdf) {
-      // Passing an Error here surfaces as a 400 in the error handler.
+      // Multer passes this to next(), so the error handler formats it.
       return cb(new Error("Only PDF resumes are accepted."));
     }
     cb(null, true);

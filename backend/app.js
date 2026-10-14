@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { scanRouter } from "./routes/scan.js";
+import { scanRouter } from "./routes/scanRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorHandler.js";
 
 /** Build the Express app. Kept separate from server.js so a test file can

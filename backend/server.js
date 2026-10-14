@@ -9,8 +9,8 @@ const PORT = process.env.PORT || 5000;
 
 const app = createApp();
 
-// Connect first, then listen. connectDB resolves either way (see db.js), so
-// a missing database delays startup by at most 5s and never crashes it.
+// Connect first, then listen. connectDB resolves either way (see config/db.js),
+// so a missing database delays startup by at most 5s and never crashes it.
 await connectDB(process.env.MONGODB_URI);
 
 app.listen(PORT, () => {

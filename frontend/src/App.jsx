@@ -6,7 +6,7 @@ import Footer from "./components/Footer.jsx";
 import { useResumeScanner } from "./hooks/useResumeScanner.js";
 
 /* v0.2 — the flow is now: pick a resume, paste a job description, analyse.
-   The scoring happens on the server (see backend/src/lib/analyze.js). */
+   The scoring happens on the server (see backend/service/analyzeService.js). */
 
 /** The page. State lives in the hook; the components below are presentational.
  *

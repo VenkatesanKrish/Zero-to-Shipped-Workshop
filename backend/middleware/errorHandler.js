@@ -1,5 +1,9 @@
 /** Central error handler.
  *
+ *  Every layer below throws; this is the single place that turns a thrown
+ *  error into an HTTP response. Services throw `HttpError` with a status,
+ *  multer throws its own codes, and anything else becomes a 500.
+ *
  *  Express identifies this as an error handler by its four arguments, so
  *  the unused `next` is required — removing it silently turns this into
  *  ordinary middleware that never runs. */
@@ -11,7 +15,13 @@ export function errorHandler(err, _req, res, _next) {
   }
 
   const status = err.status || 400;
-  console.error("[error]", err.message);
+
+  // Log server-side faults loudly; expected 4xx noise is not a bug.
+  if (status >= 500) {
+    console.error("[error]", err);
+  } else {
+    console.warn("[error]", err.message);
+  }
 
   res.status(status).json({ error: err.message || "Something went wrong." });
 }
